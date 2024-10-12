@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake & Ladders</title>
+    <link rel="icon" href="https://th.bing.com/th/id/OIP.VhgraUDey_zi4SAoOfl9MQHaDu?w=279&h=176&c=7&r=0&o=5&dpr=1.5&pid=1.7">
+    <style>
+        #frame{
+    text-align: center;
+    max-width: 400px;
+    padding: 40px;
+    border-radius: 15px;
+    font-weight:700;
+    font-size:large;
+    margin: 3px;
+    border-color: #49cbff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, rgba(157, 202, 245, 0.18), rgba(156, 231, 250, 0.18));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: fadeIn 1s ease-in-out;
+    margin: auto;
+    flex-direction: column;
+    color: rgb(249, 249, 249);
+    outline: invert;
+    text-shadow:-1px -1px 0 rgba(0, 0, 0, 1),  
+    1px -1px 0 rgb(6, 144, 47),  
+   -1px  1px 0 rgb(5, 94, 11),  
+    1px  1px 0 rgb(8, 116, 15);
+   
+}
+input{
+    align-items:center;
+    align-self: start;
+    width: 70%;
+    cursor:pointer;
+    padding: 10px;
+    margin:3%;    
+    border: 1.5px solid #003043;
+    border-radius: 8px;
+    outline: none;
+    transition: border 0.3s;
+    font-size: large;
+    font-weight:4rem;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+    background-color:rgba(3, 159, 29, 0.365);
+}
+
+body {
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight: 500;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('https://betterlivingthroughbeowulf.com/wp-content/uploads/2018/02/Snakes-and-Ladders.jpeg');
+    background-size: contain;
+}
+button{
+    width: 70px;
+    height: 40px;
+    box-shadow:rgb(69, 67, 67);
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: rgb(244, 200, 41);
+    font-size: large;
+
+}
+#rollbtn{
+    width: 74px;
+    height: 72px;
+    border-radius:15px;
+    box-shadow:rgb(69, 67, 67);
+    border-color: black;
+    background-image:url('https://th.bing.com/th/id/OIP.VAF-3J_QHYoh-c552HFrdgHaHa?w=227&h=220&c=7&r=0&o=5&dpr=1.5&pid=1.7') ;
+    background-size:contain;
+    background-repeat: no-repeat;
+    text-shadow: 0ch;
+}
+button:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+@media screen and (max-width: 500px) {
+    #frame {
+        width: 95%;
+        padding: 20px;
+    }
+}
+    </style>
+</head>
+<body>
+    <div id="frame">
+        <label> </label>
+        <input type="number" id="totplayers" placeholder="Enter Number of players" min="2">
+        <br>
+        <button onclick="play();">Play</button>
+        <hr>
+        <label>Player </label><input readonly id="player">
+        <label>Dice   </label><input readonly id="dice">
+        <label>Score  </label><input readonly id="score">
+        <label>Status </label><input readonly id="status">
+        <label>Rolls  </label> <input readonly id="rolls">
+        <hr>
+        <div id="replay"></div>
+        <button onclick="roll();" id="rollbtn"></button>
+
+    </div>
+    <script>
+        function details(){
+    return{
+        score:0,
+        rolls:0,
+        status:0
+    }
+}
+var players=[];
+var player=0;
+var properties=['Snake','Ladder','No Play'];
+var totplayers=0;
+
+function play(){
+    players=[];
+    totplayers=parseInt(document.getElementById("totplayers").value);
+     if(totplayers<2){
+        alert('Enter Valid Players:')
+    }
+    for(let i=0;i<totplayers;i++){
+        players.push(details());
+    }
+}
+ function roll(){
+    document.getElementById('replay').innerHTML=``;
+    let dice=Math.floor(Math.random()*6+1);
+    let turn=Math.floor(Math.random()*3);
+    let current=player%totplayers;
+   
+    if(players[current].status==0 && dice==1){
+        players[current].status=1;
+    }
+
+    if(players[current].status==1){
+        players[current].rolls++;
+
+        if(turn==0 && players[current].score<=dice){
+            players[current].score=0;
+        }
+        else if(turn ==0){
+            players[current].score-=dice;
+        }
+        else if(turn==1 && players[current].score+dice<=100){
+            players[current].score+=dice;
+        }
+    }
+    document.getElementById("player").value=(current+1).toFixed(0);
+    document.getElementById("dice").value=dice.toFixed(0);
+    document.getElementById("score").value=players[current].score.toFixed(0);
+    document.getElementById("status").value=properties[turn];
+    document.getElementById("rolls").value=players[current].rolls;
+    
+    if(players[current].score===100){
+        alert(`player ${current+1} Wins !`);
+       
+    }
+    else if(dice===6){
+        document.getElementById('replay').innerHTML=`player ${current+1} roll again !`
+    }
+    else{
+ player++;
+    }
+
+ }
+
+        </script>
+
+</body>
+</html>
