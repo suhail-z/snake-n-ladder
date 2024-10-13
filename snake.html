@@ -6,7 +6,7 @@
     <title>Snake & Ladders</title>
     <link rel="icon" href="https://th.bing.com/th/id/OIP.VhgraUDey_zi4SAoOfl9MQHaDu?w=279&h=176&c=7&r=0&o=5&dpr=1.5&pid=1.7">
     <style>
-        #frame{
+    #frame{
     text-align: center;
     max-width: 400px;
     padding: 40px;
@@ -21,35 +21,45 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
     animation: fadeIn 1s ease-in-out;
     margin: auto;
-    flex-direction: column;
-    color: rgb(249, 249, 249);
+    color: rgb(255, 255, 255);
     outline: invert;
-    text-shadow:-1px -1px 0 rgba(0, 0, 0, 1),  
+    text-shadow:-2px -1px 0 rgba(0, 0, 0, 1),  
     1px -1px 0 rgb(6, 144, 47),  
-   -1px  1px 0 rgb(5, 94, 11),  
-    1px  1px 0 rgb(8, 116, 15);
+   -1px  2px 0 rgb(5, 94, 11),  
+    2px  1px 0 rgb(8, 116, 15);
    
+}
+.display{
+    width:120%;
+    border-bottom: 4px solid black;
+    border: black;
+    background-color: transparent;
+    outline: 0;
+}
+#stats{
+    display: none;
+    font-size: large;
 }
 input{
     align-items:center;
-    align-self: start;
-    width: 70%;
+    width: 80%;
     cursor:pointer;
-    padding: 10px;
-    margin:3%;    
-    border: 1.5px solid #003043;
+    padding: 12px;
+    margin:4%;    
+    border: none;
+    border-bottom: 5px solid green;
     border-radius: 8px;
     outline: none;
     transition: border 0.3s;
     font-size: large;
-    font-weight:4rem;
+    font-weight:700;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     text-align: center;
-    background-color:rgba(3, 159, 29, 0.365);
+    background-color: rgba(1, 174, 39, 0.664);
 }
 
 body {
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: 500;
 
     display: flex;
@@ -68,7 +78,7 @@ button{
     cursor: pointer;
     background-color: rgb(244, 200, 41);
     font-size: large;
-
+   
 }
 #rollbtn{
     width: 74px;
@@ -94,20 +104,40 @@ button:hover {
 </head>
 <body>
     <div id="frame">
-        <label> </label>
-        <input type="number" id="totplayers" placeholder="Enter Number of players" min="2">
-        <br>
-        <button onclick="play();">Play</button>
-        <hr>
-        <label>Player </label><input readonly id="player">
-        <label>Dice   </label><input readonly id="dice">
-        <label>Score  </label><input readonly id="score">
-        <label>Status </label><input readonly id="status">
-        <label>Rolls  </label> <input readonly id="rolls">
+        <label> 🐍  SNAKE  AND  LADDERS  🪜 </label>
+        <div id="entryInfo">
+            <hr>
+         <input type="number" id="totplayers" placeholder="Enter Number of players" min="2" max="8">
+        <br><hr>
+        <button id="playbtn" onclick="play();">Play</button>
+           
+        </div>
+       
+        <div id="stats">
+        <table>
+          <hr>
+            <tr> 
+               <td>Player</td> <td><input class="display" readonly id="player"></td>
+            </tr>
+            <tr>
+                <td>Dice</td><td><input class="display" readonly id="dice"></td>
+            </tr>
+            <tr>
+                <td>Score</td><td><input class="display" readonly id="score"></td>
+            </tr>
+           <tr>
+            <td>Status</td><td><input class="display" readonly id="status"></td>
+
+            </tr> 
+           <tr>
+            <td>Rolls</td><td><input class="display" readonly id="rolls"></td>
+           </tr>
+        
+    </table>
         <hr>
         <div id="replay"></div>
         <button onclick="roll();" id="rollbtn"></button>
-
+</div>
     </div>
     <script>
         function details(){
@@ -119,23 +149,30 @@ button:hover {
 }
 var players=[];
 var player=0;
-var properties=['Snake','Ladder','No Play'];
-var totplayers=0;
+var properties=['Snake','Ladder','No Play','play'];
+var totplayers;
 
 function play(){
-    players=[];
+  
+    players=[]
     totplayers=parseInt(document.getElementById("totplayers").value);
-     if(totplayers<2){
+     
+    if(totplayers<2 ||isNaN(totplayers)){
         alert('Enter Valid Players:')
     }
+
+    else{
     for(let i=0;i<totplayers;i++){
         players.push(details());
     }
+    document.getElementById('entryInfo').style.display='none';
+    document.getElementById('stats').style.display='block';
+}
 }
  function roll(){
     document.getElementById('replay').innerHTML=``;
     let dice=Math.floor(Math.random()*6+1);
-    let turn=Math.floor(Math.random()*3);
+    let turn=Math.floor(Math.random()*4);
     let current=player%totplayers;
    
     if(players[current].status==0 && dice==1){
@@ -151,8 +188,11 @@ function play(){
         else if(turn ==0){
             players[current].score-=dice;
         }
-        else if(turn==1 && players[current].score+dice<=100){
-            players[current].score+=dice;
+        else if(turn==1 && players[current].score+(dice*3)<=100){
+            players[current].score+=dice*3;
+        }
+        else if(turn==3 && players[current].score+dice<=100){
+          players[current].score+=dice;
         }
     }
     document.getElementById("player").value=(current+1).toFixed(0);
@@ -162,7 +202,14 @@ function play(){
     document.getElementById("rolls").value=players[current].rolls;
     
     if(players[current].score===100){
-        alert(`player ${current+1} Wins !`);
+        alert(`player ${current+1} Wins !\nClick OK to Play Again :)`);
+        players=[];
+        document.getElementById('entryInfo').style.display='block';
+        document.getElementById('stats').style.display='none';
+        const stats=document.querySelectorAll('.display');
+        stats.forEach(element => {
+            element.value='';
+        });
        
     }
     else if(dice===6){
