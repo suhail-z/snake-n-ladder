@@ -1,0 +1,94 @@
+#frame{
+    text-align: center;
+    max-width: 400px;
+    padding: 40px;
+    border-radius: 15px;
+    font-weight:700;
+    font-size:large;
+    margin: 3px;
+    border-color: #49cbff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, rgba(157, 202, 245, 0.18), rgba(156, 231, 250, 0.18));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: fadeIn 1s ease-in-out;
+    margin: auto;
+    color: rgb(255, 255, 255);
+    outline: invert;
+    text-shadow:-2px -1px 0 rgba(0, 0, 0, 1),  
+    1px -1px 0 rgb(6, 144, 47),  
+   -1px  2px 0 rgb(5, 94, 11),  
+    2px  1px 0 rgb(8, 116, 15);
+   
+}
+.display{
+    width:120%;
+    border-bottom: 4px solid black;
+    border: black;
+    background-color: transparent;
+    outline: 0;
+}
+#stats{
+    display: none;
+    font-size: large;
+}
+input{
+    align-items:center;
+    width: 80%;
+    cursor:pointer;
+    padding: 12px;
+    margin:4%;    
+    border: none;
+    border-bottom: 5px solid green;
+    border-radius: 8px;
+    outline: none;
+    transition: border 0.3s;
+    font-size: large;
+    font-weight:700;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+    background-color: rgba(1, 174, 39, 0.664);
+}
+
+body {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 500;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('https://betterlivingthroughbeowulf.com/wp-content/uploads/2018/02/Snakes-and-Ladders.jpeg');
+    background-size: contain;
+}
+button{
+    width: 70px;
+    height: 40px;
+    box-shadow:rgb(69, 67, 67);
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: rgb(244, 200, 41);
+    font-size: large;
+   
+}
+#rollbtn{
+    width: 74px;
+    height: 72px;
+    border-radius:15px;
+    box-shadow:rgb(69, 67, 67);
+    border-color: black;
+    background-image:url('https://th.bing.com/th/id/OIP.VAF-3J_QHYoh-c552HFrdgHaHa?w=227&h=220&c=7&r=0&o=5&dpr=1.5&pid=1.7') ;
+    background-size:contain;
+    background-repeat: no-repeat;
+    text-shadow: 0ch;
+}
+button:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+@media screen and (max-width: 500px) {
+    #frame {
+        width: 95%;
+        padding: 20px;
+    }
+}
